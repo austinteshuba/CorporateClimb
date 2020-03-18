@@ -1239,11 +1239,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4738325536605858}
   - component: {fileID: 95523389004218154}
-  - component: {fileID: -4461828780059149482}
   - component: {fileID: -7522905612613862221}
   - component: {fileID: -4751969007642707567}
+  - component: {fileID: 4912413308814657550}
   m_Layer: 0
-  m_Name: Hans_B_withFace
+  m_Name: Hans
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1286,19 +1286,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &-4461828780059149482
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507892004249500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.84547985, y: 2.0460975, z: 0.694944}
-  m_Center: {x: 0.011903241, y: 0.980667, z: 0.010894895}
 --- !u!114 &-7522905612613862221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,6 +1317,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!65 &4912413308814657550
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507892004249500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1566996160382178
 GameObject:
   m_ObjectHideFlags: 0
