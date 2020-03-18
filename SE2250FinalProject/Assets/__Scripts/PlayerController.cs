@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     public float rotateSpeed;
     public float speed;
+    public bool isSitting;
 
     private int _influence;
     private float _multiplier;
@@ -17,7 +18,9 @@ public class PlayerController : MonoBehaviour
     private string _alertText;
     private bool _stealingFlag;
     private bool _socializingFlag;
+    private bool _sittingFlag;
     private bool _isColliding;
+    private bool _isCollidingWithChair;
 
     private readonly string[] CONVERSATION_TEXTS = {
         "You joked about golf. It worked!",
@@ -38,7 +41,9 @@ public class PlayerController : MonoBehaviour
         _alertText = "";
         _stealingFlag = false;
         _socializingFlag = false;
+        _sittingFlag = false;
         _isColliding = false;
+        _isCollidingWithChair = false;
 
         EarnMoney();
     }
@@ -49,6 +54,7 @@ public class PlayerController : MonoBehaviour
         
         float translation = Input.GetAxis("Vertical") * speed;
         animator.SetFloat("Speed", translation);
+        animator.SetBool("isSitting", isSitting);
         float strafe = Input.GetAxis("Horizontal") * speed;
         translation *= Time.deltaTime;
         strafe *= Time.deltaTime;
@@ -58,10 +64,13 @@ public class PlayerController : MonoBehaviour
 
         CheckForRaise();
 
+        if (Input.GetKey(KeyCode.Space)) { ToggleSit(); }
+
         if (_isColliding)
         {
             if (Input.GetKey(KeyCode.T)) { Socialize(); }
             if (Input.GetKey(KeyCode.S)) { TryStealing(); }
+            
 
         }
     }
@@ -133,6 +142,23 @@ public class PlayerController : MonoBehaviour
         _socializingFlag = false;
     }
 
+    void ResetSittingFlag()
+    {
+        _sittingFlag = false;
+    }
+
+    void ToggleSit()
+    {
+        if (_sittingFlag == false)
+        {
+            print("sitting");
+            isSitting = !isSitting;
+            _sittingFlag = true;
+            Invoke("ResetSittingFlag", 2);
+        }
+        
+    }
+
     void TryStealing()
     {
         if (_stealingFlag == false)
@@ -164,6 +190,10 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("bot"))
         {
             _isColliding = true;
+        }
+        if (other.CompareTag("Desk"))
+        {
+            _isCollidingWithChair = true;
         }
     }
 
