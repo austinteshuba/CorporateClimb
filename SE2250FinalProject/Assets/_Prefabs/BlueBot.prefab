@@ -361,6 +361,7 @@ Transform:
   m_Children:
   - {fileID: 462444}
   - {fileID: 442792}
+  - {fileID: 147491515253522792}
   m_Father: {fileID: 427610}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -750,7 +751,7 @@ GameObject:
   - component: {fileID: 3003933026210718567}
   - component: {fileID: 5006366202293433518}
   m_Layer: 0
-  m_Name: Bot
+  m_Name: BlueBot
   m_TagString: bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -834,6 +835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 3
   speed: 5
+  isSitting: 0
 --- !u!1 &131150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,3 +2754,153 @@ Transform:
   m_Father: {fileID: 488336}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7212955441085915791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 147491515253522792}
+  - component: {fileID: 5054459295455213666}
+  m_Layer: 0
+  m_Name: Hands
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &147491515253522792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212955441085915791}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.212, y: 1.521, z: 2.221}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 432814}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &5054459295455213666
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212955441085915791}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 4588a918695c3404b81ce408babb4dcb, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 4300000, guid: e6ab94ea3d7bfb840aa41680fa79570e, type: 3}
+  m_Bones:
+  - {fileID: 435696}
+  - {fileID: 485468}
+  - {fileID: 463842}
+  - {fileID: 403810}
+  - {fileID: 476300}
+  - {fileID: 495208}
+  - {fileID: 428240}
+  - {fileID: 414034}
+  - {fileID: 475062}
+  - {fileID: 476126}
+  - {fileID: 403256}
+  - {fileID: 408484}
+  - {fileID: 455418}
+  - {fileID: 473660}
+  - {fileID: 432440}
+  - {fileID: 430764}
+  - {fileID: 427534}
+  - {fileID: 442822}
+  - {fileID: 488910}
+  - {fileID: 492728}
+  - {fileID: 464082}
+  - {fileID: 482752}
+  - {fileID: 437884}
+  - {fileID: 457816}
+  - {fileID: 447228}
+  - {fileID: 481886}
+  - {fileID: 494914}
+  - {fileID: 409290}
+  - {fileID: 431240}
+  - {fileID: 458644}
+  - {fileID: 435698}
+  - {fileID: 488358}
+  - {fileID: 490644}
+  - {fileID: 424762}
+  - {fileID: 400806}
+  - {fileID: 434628}
+  - {fileID: 475446}
+  - {fileID: 495926}
+  - {fileID: 442464}
+  - {fileID: 481906}
+  - {fileID: 401764}
+  - {fileID: 475900}
+  - {fileID: 412682}
+  - {fileID: 410868}
+  - {fileID: 488124}
+  - {fileID: 468144}
+  - {fileID: 451558}
+  - {fileID: 422876}
+  - {fileID: 435874}
+  - {fileID: 448448}
+  - {fileID: 423640}
+  - {fileID: 449026}
+  - {fileID: 471524}
+  - {fileID: 460684}
+  - {fileID: 412404}
+  - {fileID: 440508}
+  - {fileID: 467782}
+  - {fileID: 428856}
+  - {fileID: 406408}
+  - {fileID: 474264}
+  - {fileID: 488336}
+  - {fileID: 491394}
+  - {fileID: 414366}
+  - {fileID: 456888}
+  - {fileID: 440226}
+  - {fileID: 464034}
+  - {fileID: 493844}
+  - {fileID: 457922}
+  - {fileID: 477448}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 435696}
+  m_AABB:
+    m_Center: {x: 0.17427614, y: -0.0066980794, z: -0.00000014901161}
+    m_Extent: {x: 0.8339629, y: 0.21998802, z: 0.67370534}
+  m_DirtyAABB: 0
