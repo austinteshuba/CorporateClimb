@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject _currentPlayer;
 
-    private string[] _sceneNames = new string[]{ "CharacterCustomization", "LevelOne" };
+    private string[] _sceneNames = new string[]{ "CharacterCustomization", "LevelOne", "ComputerView" };
 
     private string _currentSceneName;
 
