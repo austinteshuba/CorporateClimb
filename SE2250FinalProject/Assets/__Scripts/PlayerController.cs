@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private bool _socializingFlag;
     private bool _sittingFlag;
     private bool _isColliding;
+
+    private GameObject _collidingBot;
+
     private bool _isCollidingWithChair;
 
     private readonly string[] CONVERSATION_TEXTS = {
@@ -68,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
         if (_isColliding)
         {
-            if (Input.GetKey(KeyCode.T)) { Socialize(); }
+            if (Input.GetKey(KeyCode.T)) { Socialize(_collidingBot); }
             if (Input.GetKey(KeyCode.S)) { TryStealing(); }
             
 
@@ -190,6 +193,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("bot"))
         {
             _isColliding = true;
+            _collidingBot = other.gameObject;
         }
         if (other.CompareTag("Desk"))
         {
@@ -205,15 +209,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Socialize()
+    void Socialize(GameObject collidingBot)
     {
         if (_socializingFlag == false)
         {
+            if (collidingBot == null)
+            {
+                Debug.Log("Attempting to talk to null bot");
+            } else
+            {
+                DialogueManager dm = FindObjectOfType<DialogueManager>();
+                dm.ShowBox();
+                dm.SetText("We are conversing!");
+                
+            }
+            /*
             int rand = Random.Range(0, CONVERSATION_TEXTS.Length);
             _alertText = CONVERSATION_TEXTS[rand];
             _socializingFlag = true;
             _multiplier = (float) System.Math.Round(_multiplier*1.1, 2);
             _influence += 1;
+            */
             Invoke("ClearAlert", 4);
             Invoke("ResetSocializingFlag", 5);
         }
