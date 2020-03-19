@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
 
-    public GameObject playerObject;
+    private GameObject _playerObject;
     public GameObject botObject;
     public float turnSpeed;
     private Transform _playerTransform;
     private GameObject _player;
     private GameObject _bot;
     private Vector3 _offset;
-    private Vector3 _playerScale = new Vector3(3f, 3f, 3f);
+    private Vector3 _playerScale = new Vector3(3f, 3f, 2f);
 
     private bool _canInteract;
 
@@ -32,9 +32,11 @@ public class CameraController : MonoBehaviour
     {
         _canInteract = false;
         // Instantiate player
-        _player = Instantiate(playerObject);
+        _playerObject = GameManager.Instance.GetCurrentPlayer();
+        _player = Instantiate(_playerObject);
         _playerTransform = _player.GetComponent<Transform>();
         _playerTransform.position = new Vector3(.02f, 0f, -1.135623f);
+        _playerTransform.rotation = new Quaternion(0,0,0,0);
         _playerTransform.localScale = _playerScale;
 
         // Instantiate bot
