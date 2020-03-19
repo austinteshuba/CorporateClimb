@@ -1243,7 +1243,11 @@ GameObject:
   - component: {fileID: -4751969007642707567}
   - component: {fileID: 4912413308814657550}
   m_Layer: 0
+<<<<<<< HEAD:SE2250FinalProject/Assets/_Prefabs/Hans.prefab
+  m_Name: Hans
+=======
   m_Name: HansBrown
+>>>>>>> master:SE2250FinalProject/Assets/_Prefabs/HansBrown.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

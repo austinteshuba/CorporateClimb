@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -598,6 +598,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574940616}
   m_CullTransparentMesh: 0
+--- !u!1 &639605329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 639605331}
+  - component: {fileID: 639605330}
+  - component: {fileID: 639605332}
+  m_Layer: 0
+  m_Name: DialogueSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &639605330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639605329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39efeac8dac6b4e8c9f9d052d12cfd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offerDialogues:
+  - dialogueName: Test Option
+    playerMessage: Hello
+    successResponse: Hello
+    failureResponse: Goodbye
+  - dialogueName: Other option
+    playerMessage: You are cool
+    successResponse: Yes I am
+    failureResponse: No I'm not
+  complimentDialogues: []
+  insultDialogues: []
+--- !u!4 &639605331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639605329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639605332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639605329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d06baa114264e02840128bc94b9dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoBoxPrefab: {fileID: 8371177114728729677, guid: 031641ea4591741bda8f56b5f3439221,
+    type: 3}
+  buttonPrefab: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
+  dialogueButton: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
 --- !u!1 &659463124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,7 +2558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f1449bb36f0845d48eb4c8c51b87b0d, type: 3}
+<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
+--- !u!1 &2092835980
+=======
 --- !u!1 &2083976427
+>>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2493,21 +2570,64 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
+  - component: {fileID: 2092835983}
+  - component: {fileID: 2092835982}
+  - component: {fileID: 2092835981}
+  m_Layer: 0
+  m_Name: EventSystem
+=======
   - component: {fileID: 2083976429}
   - component: {fileID: 2083976428}
   m_Layer: 0
   m_Name: GameManager
+>>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
+--- !u!114 &2092835981
+=======
 --- !u!114 &2083976428
+>>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
+  m_GameObject: {fileID: 2092835980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &2092835982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092835980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &2092835983
+=======
   m_GameObject: {fileID: 2083976427}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2525,11 +2645,21 @@ MonoBehaviour:
   KiraYellow: {fileID: 1165999807398598, guid: 08eca4dbb1392402d9176b29116cf322, type: 3}
   KiraWhite: {fileID: 1165999807398598, guid: 1eb7595d4e7584416bb97246d4a4933f, type: 3}
 --- !u!4 &2083976429
+>>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
+  m_GameObject: {fileID: 2092835980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+=======
   m_GameObject: {fileID: 2083976427}
   m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
   m_LocalPosition: {x: -0.37, y: 9.36, z: -7.38}
@@ -2537,6 +2667,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+>>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4234635046398804867
 PrefabInstance:

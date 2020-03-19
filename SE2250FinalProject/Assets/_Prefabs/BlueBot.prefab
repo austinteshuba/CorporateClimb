@@ -749,7 +749,7 @@ GameObject:
   - component: {fileID: 9526514}
   - component: {fileID: -5454194637862468830}
   - component: {fileID: 3003933026210718567}
-  - component: {fileID: 5006366202293433518}
+  - component: {fileID: -1347643801076801050}
   m_Layer: 0
   m_Name: BlueBot
   m_TagString: bot
@@ -821,21 +821,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 3
---- !u!114 &5006366202293433518
+--- !u!114 &-1347643801076801050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129800}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da65546f540ef4333bdd305d68dcc538, type: 3}
+  m_Script: {fileID: 11500000, guid: fac1fad191b554131b4f23b221df5eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 3
-  speed: 5
-  isSitting: 0
+  characterName: Freddy
+  offerSuccess: 50
+  complimentSuccess: 50
+  insultSuccess: 50
 --- !u!1 &131150
 GameObject:
   m_ObjectHideFlags: 0
