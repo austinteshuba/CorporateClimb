@@ -11,6 +11,9 @@ public class BotController : MonoBehaviour
     public int complimentSuccess;
     public int insultSuccess;
 
+    private int _cash;
+    private int _influence;
+
     public int GetProbabilityOfSuccess(string key)
     {
         if (key == "Offer")
