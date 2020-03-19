@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public bool isSitting;
 
+    public string Name;
+    public string OutfitName;
+
     private int _influence;
     private float _multiplier;
     private float _cash;
@@ -46,6 +49,13 @@ public class PlayerController : MonoBehaviour
         _isColliding = false;
 
         EarnMoney();
+
+        Invoke("FixPosition", 1);
+    }
+
+    void FixPosition()
+    {
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     // Update is called once per frame
@@ -58,6 +68,7 @@ public class PlayerController : MonoBehaviour
         float strafe = Input.GetAxis("Horizontal") * speed;
         translation *= Time.deltaTime;
         strafe *= Time.deltaTime;
+        
 
         transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
         transform.Translate(0, 0, translation);

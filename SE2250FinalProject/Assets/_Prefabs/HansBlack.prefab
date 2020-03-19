@@ -1132,7 +1132,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0a58129719095aa4997ad6c7635a746b, type: 2}
+  - {fileID: 2100000, guid: c0a1694200be14424bdf9cbbac9757ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1239,11 +1239,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4738325536605858}
   - component: {fileID: 95523389004218154}
-  - component: {fileID: -4461828780059149482}
   - component: {fileID: -7522905612613862221}
   - component: {fileID: -4751969007642707567}
+  - component: {fileID: 4912413308814657550}
   m_Layer: 0
-  m_Name: Hans
+  m_Name: HansBlack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1256,9 +1256,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507892004249500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: -4}
+  m_LocalScale: {x: 3, y: 3, z: 2}
   m_Children:
   - {fileID: 4781286776118382}
   - {fileID: 4544491673012942}
@@ -1266,7 +1266,7 @@ Transform:
   - {fileID: 4450822319079226}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &95523389004218154
 Animator:
   serializedVersion: 3
@@ -1286,19 +1286,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &-4461828780059149482
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507892004249500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.84547985, y: 2.0460975, z: 0.694944}
-  m_Center: {x: 0.011903241, y: 0.980667, z: 0.010894895}
 --- !u!114 &-7522905612613862221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,6 +1301,8 @@ MonoBehaviour:
   rotateSpeed: 3
   speed: 5
   isSitting: 0
+  Name: Hans
+  OutfitName: Black
 --- !u!54 &-4751969007642707567
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1328,8 +1317,21 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!65 &4912413308814657550
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507892004249500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7714402, y: 2.015516, z: 1}
+  m_Center: {x: -0.0207781, y: 1.433012, z: 0}
 --- !u!1 &1566996160382178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,7 +1508,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0a58129719095aa4997ad6c7635a746b, type: 2}
+  - {fileID: 2100000, guid: c0a1694200be14424bdf9cbbac9757ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1743,7 +1745,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0a58129719095aa4997ad6c7635a746b, type: 2}
+  - {fileID: 2100000, guid: c0a1694200be14424bdf9cbbac9757ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
