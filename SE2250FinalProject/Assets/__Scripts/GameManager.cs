@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -121,6 +122,11 @@ public class GameManager : MonoBehaviour
         return _currentPlayer;
     }
 
+    public string GetCurrentPlayerName()
+    {
+        return _isHans ? "Hans" : "Kira";
+    }
+
     public GameObject ToggleOutfit(bool up=true)
     {
         if (up) {
@@ -136,14 +142,27 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public string GetCharacterText() {
+        if (_isHans)
+        {
+            return "Hans is a socialite. He's really likeable, but can come off a little strong sometimes. By selecting Hans, you'll be able to make more meaningful" +
+                "relationships, faster, by having more meaningful conversations. But be careful, come off too strong and you might get fired.";
+        } else
+        {
+            return "Kira couldn't be bothered with what Sandra had for dinner. She might not know about quantam technology, but she has wits, especially with the " +
+                "art of theivery. With Kira you'll be able to steal from your coworkers to get work done, but be careful! Get caught and you might get fired!.";
+        }
+    }
+
+
     public void GoToGameScene()
     {
-
+        SceneManager.LoadScene(_sceneNames[1]);
     }
 
     public void GoToPlayerCustomizationScene()
     {
-
+        SceneManager.LoadScene(_sceneNames[0]);
     }
    
 

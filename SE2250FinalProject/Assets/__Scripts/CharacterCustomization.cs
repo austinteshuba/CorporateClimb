@@ -11,10 +11,10 @@ public class CharacterCustomization : MonoBehaviour
 
     public Button ChangeCharacter;
     public Button ChangeOutfit;
+    public Text Instructions;
 
     void Awake()
     {
-        Debug.Log("YEET");
         _gameManager = GameManager.Instance;
     }
     // Start is called before the first frame update
@@ -25,12 +25,14 @@ public class CharacterCustomization : MonoBehaviour
 
         UpdateCharacterButtonText();
         UpdateOutfitButtonText();
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Instructions.text = GameManager.Instance.GetCharacterText();
     }
 
     void UpdateCharacterButtonText()
