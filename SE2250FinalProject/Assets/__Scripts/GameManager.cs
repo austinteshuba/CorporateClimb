@@ -39,12 +39,11 @@ public class GameManager : MonoBehaviour
 
     private GameObject _currentPlayer;
 
-    private string[] _sceneNames = new string[]{ "CharacterCustomization", "LevelOne", "ComputerView" };
+    private string[] _sceneNames = new string[]{ "CharacterCustomization", "LevelOne", "ComputerView", "ComputerExternalResourceView", "ComputerDesktopView" };
 
     private string _currentSceneName;
 
-
-
+    private float _computerTimeLeft;
 
 
     private void Awake()
@@ -55,6 +54,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+            // THIS ASSUMES WE ALWAYS START AT CHARACTER CUSTOMIZATION.
+            // TODO: Make adaptable to starting at any screen.
             _currentSceneName = _sceneNames[0];
 
             _kiras = new GameObject[5];
@@ -127,6 +128,29 @@ public class GameManager : MonoBehaviour
         return _isHans ? "Hans" : "Kira";
     }
 
+    private float GenerateComputerTime()
+    {
+        _computerTimeLeft = Random.Range(20, 45);
+        return _computerTimeLeft;
+    }
+
+    public float GetComputerTime()
+    {
+        if (_computerTimeLeft == 0.0)
+        {
+            return GenerateComputerTime();
+        } else
+        {
+            return _computerTimeLeft;
+        }
+    }
+
+    public float ReduceComputerTime(float time)
+    {
+        _computerTimeLeft -= time;
+        return _computerTimeLeft;
+    }
+
     public GameObject ToggleOutfit(bool up=true)
     {
         if (up) {
@@ -157,12 +181,40 @@ public class GameManager : MonoBehaviour
 
     public void GoToGameScene()
     {
-        SceneManager.LoadScene(_sceneNames[1]);
+        _currentSceneName = _sceneNames[1];
+        UpdateScene();
     }
 
     public void GoToPlayerCustomizationScene()
     {
-        SceneManager.LoadScene(_sceneNames[0]);
+        _currentSceneName = _sceneNames[0];
+        UpdateScene();
+    }
+
+    public string GetCurrentSceneName()
+    {
+        return _currentSceneName;
+    }
+
+    public void GoToExternalConnectionsScene()
+    {
+        _currentSceneName = _sceneNames[3];
+        UpdateScene();
+    }
+    public void GoToDesktopScene()
+    {
+        _currentSceneName = _sceneNames[4];
+        UpdateScene();
+    }
+    public void UpdateScene()
+    {
+        SceneManager.LoadScene(_currentSceneName);
+    }
+
+    public void GoToComputerView()
+    {
+        _currentSceneName = _sceneNames[2];
+        UpdateScene();
     }
    
 
