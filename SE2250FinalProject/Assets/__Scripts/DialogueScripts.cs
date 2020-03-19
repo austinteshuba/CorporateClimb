@@ -9,16 +9,4 @@ public class DialogueScripts : MonoBehaviour
     public Dialogue[] complimentDialogues;
     public Dialogue[] insultDialogues;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -2,58 +2,161 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : InfoBoxController
 {
+    // List to contain option buttons
+    private List<GameObject> _buttons;
+    private string[] _options = { "Offer", "Compliment", "Insult Other" };
 
-    public GameObject infoBoxPrefab;
-    private GameObject _dialogueBox;
-    private GameObject _textObject;
-    private Text _messageText;
+    private DialogueScripts _dialogueScripts;
+    private Dialogue[] dialogue;
+    private string dialogueType;
 
+    public GameObject dialogueButton;
+
+    private GameObject _bot;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        _dialogueBox = Instantiate(infoBoxPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        _dialogueBox.transform.parent = gameObject.transform;
+        base.Start();
 
-        _dialogueBox.SetActive(false);
+        // Initialize button list
+        _buttons = new List<GameObject>();
 
-
-        _textObject = new GameObject();
-        _textObject.transform.parent = _dialogueBox.transform;
-
-        _messageText = _textObject.AddComponent<Text>();
-        Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        _messageText.font = ArialFont;
-        _messageText.material = ArialFont.material;
-        _messageText.fontSize = 20;
-        _messageText.transform.parent = _dialogueBox.transform;
-
-        // Set position of text
-        RectTransform rectTransform = _messageText.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(0, 0, 0);
-        rectTransform.sizeDelta = new Vector2(400, 200);
-
-        // Hide Text
-        _textObject.SetActive(false);
+        // Get DialogueScripts
+        _dialogueScripts = gameObject.GetComponent<DialogueScripts>();
     }
 
-    public void ShowBox()
+    public void InitializeDialogue(bool isHans, GameObject interactingBot)
     {
-        _textObject.SetActive(true);
-        _dialogueBox.SetActive(true);
+        // Set bot
+        _bot = interactingBot;
+
+        // Display box
+        ShowBox(false);
+
+        // Get dialogue type from user
+
+        if (isHans)
+        {
+            dialogueType = RequestDialogueType();
+        } else
+        {
+            dialogueType = _options[1];
+        }
+
+        // Get dialogue options
+        switch (dialogueType)
+        {
+            case "Offer":
+                dialogue = _dialogueScripts.offerDialogues;
+                break;
+            case "Compliment":
+                dialogue = _dialogueScripts.complimentDialogues;
+                break;
+            case "Insult Other":
+                dialogue = _dialogueScripts.insultDialogues;
+                break;
+            default:
+                Debug.LogError("No dialogue initialized");
+                return;
+        }
+
+        // 10 units of button spacing
+        int buttonSpacing = Mathf.RoundToInt(dialogueButton.GetComponent<RectTransform>().rect.width) + 10;
+        int buttonCount = 0;
+
+        // Get position of buttons
+        RectTransform dbRect = _infoBox.GetComponent<RectTransform>();
+        int boxHeight = Mathf.RoundToInt(dbRect.rect.height / 4);
+        int boxWidth = Mathf.RoundToInt(dbRect.rect.width / 8);
+        print(boxHeight);
+        foreach (Dialogue d in dialogue)
+        {
+            // Instantiate new button
+            GameObject newButton = Instantiate(dialogueButton);
+            newButton.GetComponent<Button>().onClick.AddListener(ActivateDialogue);
+            Text buttonText = newButton.GetComponentInChildren<Text>();
+            buttonText.text = d.dialogueName;
+            buttonText.fontSize = 12;
+            newButton.transform.SetParent(_infoBox.transform);
+
+            // Position button
+            newButton.transform.localPosition = new Vector3(-boxWidth + buttonSpacing * buttonCount++, -boxHeight, 0);
+
+            // Add to button list
+            _buttons.Add(newButton);
+        }
+
+
     }
 
-    public void HideBox()
+    void ActivateDialogue()
     {
-        _textObject.SetActive(false);
-        _dialogueBox.SetActive(false);
+        // Get selected dialogue from button
+        GameObject buttonpressed = EventSystem.current.currentSelectedGameObject;
+        string buttonName = buttonpressed.GetComponentInChildren<Text>().text;
+
+        Dialogue selectedDialogue = null;
+
+        // Find dialogue
+        foreach (Dialogue d in dialogue)
+        {
+            if (d.dialogueName == buttonName)
+            {
+                selectedDialogue = d;
+            }
+        }
+
+        if (selectedDialogue == null)
+        {
+            Debug.LogError("No dialogue found that matched button selection!");
+            return;
+        }
+
+        // Get bot probability of success for selected category
+        BotController botController = _bot.GetComponent<BotController>();
+        int probOfSuccess = botController.GetProbabilityOfSuccess(dialogueType);
+        if (probOfSuccess < 0)
+        {
+            Debug.LogError("Invalid type key: " + dialogueType);
+            return;
+        }
+
+        if (isSuccessful(probOfSuccess))
+        {
+            DisplayDialogue(selectedDialogue.playerMessage, selectedDialogue.successResponse);
+        } else
+        {
+            DisplayDialogue(selectedDialogue.playerMessage, selectedDialogue.failureResponse);
+        }
+
+        
     }
 
-    public void SetText(string message)
+    void DisplayDialogue(string playerMessage, string botMessage)
     {
-        _messageText.text = message;
+        string message = "You: " + playerMessage + "\n" + _bot.GetComponent<BotController>().characterName + ": " + botMessage;
+        SetText(message);
+        Invoke("DisplayExitButton", 2);
+    }
+
+    void DisplayExitButton()
+    {
+        _exitButtonObject.SetActive(true);
+    }
+
+    bool isSuccessful(int probSuccess)
+    {
+        int randInt = Mathf.RoundToInt(Random.Range(0, 100));
+        return randInt <= probSuccess;
+    }
+
+    string RequestDialogueType()
+    {
+        return "Offer";
     }
 }

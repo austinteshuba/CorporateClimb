@@ -1243,7 +1243,7 @@ GameObject:
   - component: {fileID: -7522905612613862221}
   - component: {fileID: -4751969007642707567}
   m_Layer: 0
-  m_Name: Hans_B_withFace
+  m_Name: Hans
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

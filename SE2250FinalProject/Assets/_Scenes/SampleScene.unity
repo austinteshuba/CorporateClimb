@@ -682,6 +682,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574940616}
   m_CullTransparentMesh: 0
+--- !u!1 &639605329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 639605331}
+  - component: {fileID: 639605330}
+  - component: {fileID: 639605332}
+  m_Layer: 0
+  m_Name: DialogueSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &639605330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639605329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39efeac8dac6b4e8c9f9d052d12cfd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offerDialogues:
+  - dialogueName: Test Option
+    playerMessage: Hello
+    successResponse: Hello
+    failureResponse: Goodbye
+  - dialogueName: Other option
+    playerMessage: You are cool
+    successResponse: Yes I am
+    failureResponse: No I'm not
+  complimentDialogues: []
+  insultDialogues: []
+--- !u!4 &639605331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639605329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639605332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639605329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d06baa114264e02840128bc94b9dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoBoxPrefab: {fileID: 8371177114728729677, guid: 031641ea4591741bda8f56b5f3439221,
+    type: 3}
+  buttonPrefab: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
+  dialogueButton: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
 --- !u!1 &659463124
 GameObject:
   m_ObjectHideFlags: 0

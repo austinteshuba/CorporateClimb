@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
 
     private GameObject _collidingBot;
 
-    private bool _isCollidingWithChair;
-
     private readonly string[] CONVERSATION_TEXTS = {
         "You joked about golf. It worked!",
         "Your coworker made some really odd comment about ones and zeroes. You Laughed - good call!",
@@ -46,7 +44,6 @@ public class PlayerController : MonoBehaviour
         _socializingFlag = false;
         _sittingFlag = false;
         _isColliding = false;
-        _isCollidingWithChair = false;
 
         EarnMoney();
     }
@@ -195,10 +192,6 @@ public class PlayerController : MonoBehaviour
             _isColliding = true;
             _collidingBot = other.gameObject;
         }
-        if (other.CompareTag("Desk"))
-        {
-            _isCollidingWithChair = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -219,17 +212,15 @@ public class PlayerController : MonoBehaviour
             } else
             {
                 DialogueManager dm = FindObjectOfType<DialogueManager>();
-                dm.ShowBox();
-                dm.SetText("We are conversing!");
-                
+                dm.InitializeDialogue(true, collidingBot);
             }
             /*
             int rand = Random.Range(0, CONVERSATION_TEXTS.Length);
             _alertText = CONVERSATION_TEXTS[rand];
-            _socializingFlag = true;
             _multiplier = (float) System.Math.Round(_multiplier*1.1, 2);
             _influence += 1;
             */
+            _socializingFlag = true;
             Invoke("ClearAlert", 4);
             Invoke("ResetSocializingFlag", 5);
         }
