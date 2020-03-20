@@ -750,6 +750,7 @@ GameObject:
   - component: {fileID: -5454194637862468830}
   - component: {fileID: 3003933026210718567}
   - component: {fileID: -1347643801076801050}
+  - component: {fileID: 2306680930794241699}
   m_Layer: 0
   m_Name: BlueBot
   m_TagString: bot
@@ -803,8 +804,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.60685575, y: 1.8264034, z: 0.40842426}
-  m_Center: {x: 0.0047947913, y: 0.8830484, z: -0.00916332}
+  m_Size: {x: 1.1881188, y: 1.8264034, z: 0.9969802}
+  m_Center: {x: 0.0047948956, y: 0.8830484, z: 0.03806615}
 --- !u!54 &3003933026210718567
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -817,7 +818,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 3
@@ -833,10 +834,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac1fad191b554131b4f23b221df5eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Freddy
-  offerSuccess: 50
-  complimentSuccess: 50
-  insultSuccess: 50
+  CharacterName: 
+  OfferSuccess: 0
+  ComplimentSuccess: 0
+  InsultSuccess: 0
+--- !u!65 &2306680930794241699
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6148565, y: 1.8359206, z: 0.42590034}
+  m_Center: {x: -0.018163443, y: 0.88316834, z: 0.0036430955}
 --- !u!1 &131150
 GameObject:
   m_ObjectHideFlags: 0

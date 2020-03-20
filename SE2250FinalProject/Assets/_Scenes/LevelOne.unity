@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -360,7 +360,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450995694}
   m_CullTransparentMesh: 0
---- !u!1 &459738374
+--- !u!1 &522375690
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,78 +368,162 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 459738375}
-  - component: {fileID: 459738377}
-  - component: {fileID: 459738376}
-  m_Layer: 5
-  m_Name: Alert Text
+  - component: {fileID: 522375693}
+  - component: {fileID: 522375692}
+  - component: {fileID: 522375691}
+  m_Layer: 0
+  m_Name: DialogueSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &459738375
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459738374}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1351493440}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1500, y: 500}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &459738376
+--- !u!114 &522375691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459738374}
+  m_GameObject: {fileID: 522375690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: 05d06baa114264e02840128bc94b9dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9600028, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 50
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert!
-    Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert!
-    Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert!
-    Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! Alert! '
---- !u!222 &459738377
-CanvasRenderer:
+  InfoBoxPrefab: {fileID: 8371177114728729677, guid: 031641ea4591741bda8f56b5f3439221,
+    type: 3}
+  ButtonPrefab: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
+  DialogueButton: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
+--- !u!114 &522375692
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459738374}
-  m_CullTransparentMesh: 0
+  m_GameObject: {fileID: 522375690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39efeac8dac6b4e8c9f9d052d12cfd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offerDialogues:
+  - DialogueName: $5 - Buy Coffee
+    PlayerMessage: "Hey, I really appreciate all the work you\u2019ve been putting
+      in recently. Here, I got you some coffee."
+    SuccessResponse: Thank you so much! You are so thoughtful!
+    ErrorInsultResponse: 
+    FailureResponse: "Sorry, I don\u2019t drink coffee, but thanks anyways. "
+    InfluenceChange: 5
+    MultiplierChange: 1
+    Price: 5
+    BotInfluenceDamage: 0
+  - DialogueName: $200 - Sports Tickets
+    PlayerMessage: Looks like the Stanley Cup Final between the Leafs and Oilers is
+      on tonight. Would you like to come to the game with me?
+    SuccessResponse: "Wow, I would love to come! Thanks for the invite, I\u2019ll
+      see you tonight!"
+    ErrorInsultResponse: 
+    FailureResponse: "That\u2019s very nice of you but hockey is my least favourite
+      sport."
+    InfluenceChange: 20
+    MultiplierChange: 1.5
+    Price: 200
+    BotInfluenceDamage: 0
+  - DialogueName: $60 - Dine Out
+    PlayerMessage: Hey, I got us a reservation at Nobu in an hour. Do you want to
+      join me?
+    SuccessResponse: Yes that would be great, thanks for offering!
+    ErrorInsultResponse: 
+    FailureResponse: "Sorry I\u2019m too busy right now, but maybe next time!"
+    InfluenceChange: 10
+    MultiplierChange: 1
+    Price: 60
+    BotInfluenceDamage: 0
+  complimentDialogues:
+  - DialogueName: Work
+    PlayerMessage: "I was just looking through some of your work and I am really impressed.
+      I like how you\u2019ve achieved a good balance between clean presentation and
+      significant details and intricacies. Keep it up!"
+    SuccessResponse: "Thanks for saying that, I\u2019ve been working hard and really
+      appreciate to hear that it\u2019s paying off!"
+    ErrorInsultResponse: 
+    FailureResponse: Well my boss seems to disagree. Maybe you should do some actual
+      reading before you compliment my work.
+    InfluenceChange: 5
+    MultiplierChange: 0.5
+    Price: 0
+    BotInfluenceDamage: 0
+  - DialogueName: Clothes
+    PlayerMessage: Love the outfit today, is it new?
+    SuccessResponse: "Thanks, I\u2019ve been frequenting Holt Renfrew recently so
+      it\u2019s nice to hear those words."
+    ErrorInsultResponse: 
+    FailureResponse: "I wish you were true but I can\u2019t wait to get rid of these
+      clothes. You need to work on your fashion sense!"
+    InfluenceChange: 3
+    MultiplierChange: 0.1
+    Price: 0
+    BotInfluenceDamage: 0
+  - DialogueName: Personality
+    PlayerMessage: "Hey, I\u2019ve really enjoyed working with you because you have
+      such a fun personality and you\u2019re always so positive!"
+    SuccessResponse: "Wow that\u2019s so nice of you to say, I\u2019m really glad!"
+    ErrorInsultResponse: 
+    FailureResponse: "You sound like an idiot, we don\u2019t compliment each other
+      like that here."
+    InfluenceChange: 7
+    MultiplierChange: 0.5
+    Price: 0
+    BotInfluenceDamage: 0
+  insultDialogues:
+  - DialogueName: Work
+    PlayerMessage: "has been doing really poor work recently, don\u2019t you think?"
+    SuccessResponse: Yeah I agree, I think everyone around here has been thinking
+      that but nobody wanted to say it.
+    ErrorInsultResponse: You insulted my wor to my face? You aren't exactly CEO material
+      either.
+    FailureResponse: "No, I think the work has been done really well actually. Stop
+      trash-talking other people\u2019s work!"
+    InfluenceChange: 15
+    MultiplierChange: 1
+    Price: 0
+    BotInfluenceDamage: 8
+  - DialogueName: Clothes
+    PlayerMessage: "really doesn\u2019t have a good fashion sense eh?"
+    SuccessResponse: "I KNOW! Someone\u2019s gotta say something before clients think
+      we all dress like that!"
+    ErrorInsultResponse: Uhh rude? You look like you came out of a thrift store dumpster...
+    FailureResponse: "You\u2019re being rude, stop talking like that."
+    InfluenceChange: 0
+    MultiplierChange: 1
+    Price: 0
+    BotInfluenceDamage: 8
+  - DialogueName: Personality
+    PlayerMessage: is a real pain to be around because their personality really annoys
+      me.
+    SuccessResponse: Yeah I agree, hopefully our boss sees that too and acts accordingly.
+    ErrorInsultResponse: How dare you! You have the personality of a tax return.
+    FailureResponse: I disagree, I think your personality is the one that needs fixing!
+    InfluenceChange: 20
+    MultiplierChange: 2
+    Price: 0
+    BotInfluenceDamage: 15
+--- !u!4 &522375693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522375690}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &531625208
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,79 +682,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574940616}
   m_CullTransparentMesh: 0
---- !u!1 &639605329
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 639605331}
-  - component: {fileID: 639605330}
-  - component: {fileID: 639605332}
-  m_Layer: 0
-  m_Name: DialogueSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &639605330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 639605329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39efeac8dac6b4e8c9f9d052d12cfd79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offerDialogues:
-  - dialogueName: Test Option
-    playerMessage: Hello
-    successResponse: Hello
-    failureResponse: Goodbye
-  - dialogueName: Other option
-    playerMessage: You are cool
-    successResponse: Yes I am
-    failureResponse: No I'm not
-  complimentDialogues: []
-  insultDialogues: []
---- !u!4 &639605331
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 639605329}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 26
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &639605332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 639605329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d06baa114264e02840128bc94b9dda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoBoxPrefab: {fileID: 8371177114728729677, guid: 031641ea4591741bda8f56b5f3439221,
-    type: 3}
-  buttonPrefab: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
-    type: 3}
-  dialogueButton: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
-    type: 3}
 --- !u!1 &659463124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,14 +1108,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bd7469d0ecb45d39746541e354f67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botObject: {fileID: 129800, guid: 8548254babd88497e9de049401cae3a8, type: 3}
+  BotObject: {fileID: 129800, guid: 8548254babd88497e9de049401cae3a8, type: 3}
   turnSpeed: 3
   cashText: {fileID: 1088243009}
   influenceText: {fileID: 930136862}
-  alertText: {fileID: 459738376}
   instructionsText: {fileID: 574940618}
   salaryText: {fileID: 450995696}
   multiplierText: {fileID: 531625210}
+  botText: {fileID: 1877145712}
+  distance: 10
+  height: 10
+  heightDamping: 5
+  rotationDamping: 5
 --- !u!1001 &982358747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1174,6 +1189,72 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6beeee7a52234e9f8fa6d51810ec58c, type: 3}
+--- !u!1 &985326020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 985326023}
+  - component: {fileID: 985326022}
+  - component: {fileID: 985326021}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &985326021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985326020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &985326022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985326020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &985326023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985326020}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1031955937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1277,8 +1358,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -275, y: -100}
-  m_SizeDelta: {x: 500, y: 150}
+  m_AnchoredPosition: {x: -200, y: -50}
+  m_SizeDelta: {x: 350, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088243009
 MonoBehaviour:
@@ -1493,7 +1574,7 @@ PrefabInstance:
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.49
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
@@ -1657,7 +1738,7 @@ RectTransform:
   - {fileID: 531625209}
   - {fileID: 450995695}
   - {fileID: 574940617}
-  - {fileID: 459738375}
+  - {fileID: 1877145711}
   m_Father: {fileID: 963194228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1839,7 +1920,7 @@ PrefabInstance:
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.49
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
@@ -2086,7 +2167,7 @@ PrefabInstance:
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.49
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
@@ -2224,6 +2305,85 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6beeee7a52234e9f8fa6d51810ec58c, type: 3}
+--- !u!1001 &1770164487
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4234635045236024516, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_Name
+      value: Wall (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 46.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234635045236024520, guid: 9f1449bb36f0845d48eb4c8c51b87b0d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9f1449bb36f0845d48eb4c8c51b87b0d, type: 3}
 --- !u!1001 &1804715069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2303,6 +2463,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f1449bb36f0845d48eb4c8c51b87b0d, type: 3}
+--- !u!1 &1877145710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1877145711}
+  - component: {fileID: 1877145713}
+  - component: {fileID: 1877145712}
+  m_Layer: 5
+  m_Name: BotInfluence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1877145711
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877145710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1351493440}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -200, y: -178}
+  m_SizeDelta: {x: 350, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1877145712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877145710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 30
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Cash: $1042'
+--- !u!222 &1877145713
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877145710}
+  m_CullTransparentMesh: 0
 --- !u!1 &1902528349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,7 +2647,7 @@ PrefabInstance:
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.49
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1335205849150881336, guid: 3f00dedf037394290b6f19f88b196938,
         type: 3}
@@ -2558,11 +2795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f1449bb36f0845d48eb4c8c51b87b0d, type: 3}
-<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
---- !u!1 &2092835980
-=======
 --- !u!1 &2083976427
->>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2570,64 +2803,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
-  - component: {fileID: 2092835983}
-  - component: {fileID: 2092835982}
-  - component: {fileID: 2092835981}
-  m_Layer: 0
-  m_Name: EventSystem
-=======
   - component: {fileID: 2083976429}
   - component: {fileID: 2083976428}
+  - component: {fileID: 2083976430}
   m_Layer: 0
   m_Name: GameManager
->>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
---- !u!114 &2092835981
-=======
 --- !u!114 &2083976428
->>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
-  m_GameObject: {fileID: 2092835980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &2092835982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092835980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &2092835983
-=======
   m_GameObject: {fileID: 2083976427}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2644,22 +2835,13 @@ MonoBehaviour:
   KiraBlack: {fileID: 1165999807398598, guid: 6a17b3091e67940d7b8ccb737b5cbab2, type: 3}
   KiraYellow: {fileID: 1165999807398598, guid: 08eca4dbb1392402d9176b29116cf322, type: 3}
   KiraWhite: {fileID: 1165999807398598, guid: 1eb7595d4e7584416bb97246d4a4933f, type: 3}
+  Bots: []
 --- !u!4 &2083976429
->>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:SE2250FinalProject/Assets/_Scenes/SampleScene.unity
-  m_GameObject: {fileID: 2092835980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 25
-=======
   m_GameObject: {fileID: 2083976427}
   m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
   m_LocalPosition: {x: -0.37, y: 9.36, z: -7.38}
@@ -2667,8 +2849,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
->>>>>>> master:SE2250FinalProject/Assets/_Scenes/LevelOne.unity
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2083976430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083976427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5738628c5134b4cab8447ffa81b7d1d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InfoBoxPrefab: {fileID: 8371177114728729677, guid: 031641ea4591741bda8f56b5f3439221,
+    type: 3}
+  ButtonPrefab: {fileID: 8949350138190818406, guid: 27b273193ec2f49138380388e365cbbf,
+    type: 3}
 --- !u!1001 &4234635046398804867
 PrefabInstance:
   m_ObjectHideFlags: 0

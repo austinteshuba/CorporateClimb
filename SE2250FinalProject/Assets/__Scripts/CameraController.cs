@@ -3,84 +3,169 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Main controller for Main Game Scene.
+// Contains a variety of methods and fields needed to operate the game.
 public class CameraController : MonoBehaviour
 {
 
-    private GameObject _playerObject;
-    public GameObject botObject;
+    private GameObject _playerObject; // Player Game Object
+    private GameObject _player; // field for instance
+    private GameManager _gameManager; // Game Manager field
+    public GameObject BotObject; // Bot Object Field
+    // fields for movement
     public float turnSpeed;
     private Transform _playerTransform;
-    private GameObject _player;
-    private GameObject _bot;
-    private Vector3 _offset;
     private Vector3 _playerScale = new Vector3(3f, 3f, 2f);
 
     private bool _canInteract;
+    private bool _canEnterComputer;
 
+    // Text variables
     public Text cashText;
     public Text influenceText;
-    public Text alertText;
-    public Text instructionsText; // TODO: Implement the instructions only if they are near another player
+    public Text instructionsText;
     public Text salaryText;
     public Text multiplierText;
-    
+    public Text botText;
 
-    private readonly string _instructions = "Press 'T' to Talk \nPress 'S' to Steal";
+    // Fields for camera
+    public float distance = 10.0f;
+    // the height we want the camera to be above the _playerTransform
+    public float height = 5.0f;
+    // How much we want height to be dampened, along with rotation.
+    public float heightDamping = 2.0f;
+    public float rotationDamping = 1.0f;
+
+    // Text for the Text variables.
+    private string _talkingInstructions = "Press 'T' to Talk";
+    private string _computerInstructions = "Press 'C' to enter computer";
+
+    // Shader to fix shadow glitch in Unity.
+    private Shader _standardShader;
+
+    // Source: https://stackoverflow.com/questions/44104202/shadows-for-instantiated-game-object-bug
+    void ChangeShader() // because shadow for assetbundle is not working properly (Unity Bug).
+    {
+        var renderers = FindObjectsOfType<Renderer>() as Renderer[];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material.shader = _standardShader;
+        }
+    }
 
 
     void Start()
     {
+        _standardShader = Shader.Find("Standard"); // fix shader
+
+        // Init flags to false
         _canInteract = false;
+        _canEnterComputer = false;
+
         // Instantiate player
-        _playerObject = GameManager.Instance.GetCurrentPlayer();
+        _gameManager = GameManager.Instance;
+        _playerObject = _gameManager.GetCurrentPlayer();
+
         _player = Instantiate(_playerObject);
+        ChangeShader();
         _playerTransform = _player.GetComponent<Transform>();
         _playerTransform.position = new Vector3(.02f, 0f, -1.135623f);
-        _playerTransform.rotation = new Quaternion(0,0,0,0);
-        _playerTransform.localScale = _playerScale;
+        _playerTransform.rotation = new Quaternion(0, 0, 0, 0);
 
-        // Instantiate bot
-        _bot = Instantiate(botObject);
-        _bot.transform.position = new Vector3(10, 0, 0);
-        _bot.transform.localScale = _playerScale;
         
+        // Instantiate bots
+        SortedDictionary<string, int> _bots = _gameManager.GetBots();
+        _gameManager.Bots = new List<GameObject>();
 
-        _offset = transform.position - _playerTransform.position;
+        int i = 0;
+        foreach (KeyValuePair<string, int> bot in _bots)
+        {
+            GameObject newBot = Instantiate(BotObject);
+            BotController botController = newBot.GetComponent<BotController>();
+            botController.SetCharacterName(bot.Key);
+            botController.SetOfferSuccess(80);
+            botController.SetComplimentSuccess(95);
+            botController.SetInsultSuccess(100);
+            botController.SetInfluence(bot.Value);
+            newBot.transform.position = new Vector3(10 - 8 * i, 0, 0);
+            newBot.transform.localScale = _playerScale;
+            _gameManager.Bots.Add(newBot);
+            i++;
+        }
+
+        // Introduce game with some alerts
+        _gameManager.GameIntroductionAlerts();
+        
 
 
     }
 
     void Update()
     {
-        cashText.text = "Cash: $" + _player.GetComponent<PlayerController>().GetCash();
-        influenceText.text = "Influence: " + _player.GetComponent<PlayerController>().GetInfluence();
-        alertText.text = _player.GetComponent<PlayerController>().GetAlertText();
-        salaryText.text = "Current Salary: $" + _player.GetComponent<PlayerController>().GetSalary();
-        multiplierText.text = "Multiplier: " + _player.GetComponent<PlayerController>().GetMultiplier();
-        _canInteract = _player.GetComponent<PlayerController>().GetColliding();
+        // Keep text updated, check for collision
+        cashText.text = "Cash: $" + _gameManager.GetCash();
+        influenceText.text = "Influence: " + _gameManager.GetInfluence();
+        // alertText.text = _gameManager.GetGlobalAlert();
+        salaryText.text = "Current Salary: $" + _gameManager.GetSalary();
+        multiplierText.text = "Multiplier: " + _gameManager.GetMultiplier();
+        botText.text = BotText();
+        PlayerController playerController = _player.GetComponent<PlayerController>();
+        _canInteract = playerController.GetColliding();
+
+        _canEnterComputer = playerController.isSitting && playerController.GetCollidingWithDesk(); // to enter computer, must be squasting
         UpdateInstructionsText();
     }
 
+    // change text on lower left corner depending on where character is.
     void UpdateInstructionsText()
     {
-        // Use the _canInteract flag to check if you can do interactions
-        // Feel free to reimplement if you want - don't know how this will work with the trigger thing
         if (_canInteract)
         {
-            instructionsText.text = _instructions;
-        } else
+            instructionsText.text = _talkingInstructions;
+        }
+        else if (_canEnterComputer)
         {
-            instructionsText.text = "Current Position: " + _player.GetComponent<PlayerController>().GetPosition() + "\n" + (100 - _player.GetComponent<PlayerController>().GetInfluence()) + " influence to a raise!";
+            instructionsText.text = _computerInstructions;
+        }
+        else
+        {
+            instructionsText.text = "Current Position: " + _gameManager.GetPosition() + "\n" + (100 - _gameManager.GetInfluence()) + " influence to a promotion!";
         }
     }
 
-// TODO: When it is appropriate, use the _canInteract flag to make it possible to do the stealing and the socializing. There are methods made for this in Player. 
+    // Show the stats of the bots.
+    public string BotText()
+    {
+        return _gameManager.GetBotStats();
+    }
     void LateUpdate()
     {
 
-        _offset = Quaternion.AngleAxis(Input.GetAxis("Horizontal") * turnSpeed, Vector3.up) * _offset;
-        transform.position = _playerTransform.position + _offset;
-        transform.LookAt(_playerTransform.position);
-        
+        // Source: https://gamedev.stackexchange.com/questions/130621/turning-the-camera-when-the-player-turns
+
+        if (!_playerTransform) return;
+
+        // Calculate the current rotation angles
+        float wantedRotationAngle = _playerTransform.eulerAngles.y;
+
+        float currentRotationAngle = transform.eulerAngles.y;
+
+        // Damp the rotation around the y-axis
+        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+
+        // Convert the angle into a rotation
+        var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
+
+        // Set the position of the camera on the x-z plane to:
+        // distance meters behind the target
+        transform.position = _playerTransform.position;
+        transform.position -= currentRotation * Vector3.forward * distance;
+
+        // Set the height of the camera
+        transform.position = new Vector3(transform.position.x, height, transform.position.z);
+
+        // Always look at the _playerTransform
+        transform.LookAt(_playerTransform);
+
     }
 }

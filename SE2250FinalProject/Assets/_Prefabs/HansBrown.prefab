@@ -1243,11 +1243,7 @@ GameObject:
   - component: {fileID: -4751969007642707567}
   - component: {fileID: 4912413308814657550}
   m_Layer: 0
-<<<<<<< HEAD:SE2250FinalProject/Assets/_Prefabs/Hans.prefab
-  m_Name: Hans
-=======
   m_Name: HansBrown
->>>>>>> master:SE2250FinalProject/Assets/_Prefabs/HansBrown.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1262,7 +1258,7 @@ Transform:
   m_GameObject: {fileID: 1507892004249500}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.3, z: -4}
-  m_LocalScale: {x: 3, y: 3, z: 2}
+  m_LocalScale: {x: 2.7, y: 2.7, z: 1.8}
   m_Children:
   - {fileID: 4781286776118382}
   - {fileID: 4544491673012942}
