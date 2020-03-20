@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     private GameManager _gameManager = GameManager.Instance;
 
     // Flags for collision and actions
-    private bool _stealingFlag;
     private bool _socializingFlag;
     private bool _sittingFlag;
     private bool _isColliding;
@@ -28,20 +27,13 @@ public class PlayerController : MonoBehaviour
     // Holds bot being collided with
     private GameObject _collidingBot;
 
-    /*
-    private readonly string[] CONVERSATION_TEXTS = {
-        "You joked about golf. It worked!",
-        "Your coworker made some really odd comment about ones and zeroes. You Laughed - good call!",
-        "You complimented your coworkers shoes."
-    };
-    */
+  
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
 
-        _stealingFlag = false;
         _socializingFlag = false;
         _sittingFlag = false;
         _isColliding = false;
@@ -89,12 +81,6 @@ public class PlayerController : MonoBehaviour
         return _isCollidingWithDesk;
     }
 
-    
-    // Flag resets
-    void ResetStealingFlag()
-    {
-        _stealingFlag = false;
-    }
 
     void ResetSocializingFlag()
     {
@@ -117,32 +103,6 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-
-    //void TryStealing()
-    //{
-    //    if (_stealingFlag == false)
-    //    {
-    //        int random = Random.Range(1, 3);
-
-    //        _stealingFlag = true;
-
-    //        if (random == 1)
-    //        {
-    //            _alertText = "You Tried Stealing, and You Got Caught!!!";
-    //            _influence = Mathf.Min(0, _influence - 10);
-    //            _multiplier = _multiplier * 0.9f;
-    //            Invoke("ClearAlert", 4);
-    //        }
-    //        else if (random == 2)
-    //        {
-    //            _alertText = "You Tried Stealing, and It Worked! Score!";
-    //            _influence += Mathf.RoundToInt(10 * _multiplier);
-    //            Invoke("ClearAlert", 4);
-    //        }
-    //        Invoke("ResetStealingFlag", 5);
-
-    //    }
-    //}
 
     // Check collision types
     private void OnTriggerEnter(Collider other)
@@ -182,14 +142,9 @@ public class PlayerController : MonoBehaviour
                 DialogueManager dm = FindObjectOfType<DialogueManager>();
                 dm.InitializeDialogue(_gameManager.GetIsHans(), collidingBot);
             }
-            /*
-            int rand = Random.Range(0, CONVERSATION_TEXTS.Length);
-            _alertText = CONVERSATION_TEXTS[rand];
-            _multiplier = (float) System.Math.Round(_multiplier*1.1, 2);
-            _influence += 1;
-            */
+   
             _socializingFlag = true;
-            //Invoke("ClearAlert", 4);
+
             Invoke("ResetSocializingFlag", 5);
         }
 

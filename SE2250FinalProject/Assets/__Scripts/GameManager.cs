@@ -380,11 +380,6 @@ public class GameManager : MonoBehaviour
             Invoke("ResetGame", 4);
         }
     }
-
-    void ClearAlerts()
-    {
-        _globalAlertQueue = new Queue<string>();
-    }
     // checks to see if player won
     void CheckForPromotion()
     {
