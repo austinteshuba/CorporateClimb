@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,7 @@ public class CameraController : MonoBehaviour
     public Text salaryText;
     public Text multiplierText;
     public Text botText;
+    public Text codeReviewTimerText;
 
     // Fields for camera
     public float distance = 10.0f;
@@ -108,6 +110,11 @@ public class CameraController : MonoBehaviour
         // alertText.text = _gameManager.GetGlobalAlert();
         salaryText.text = "Current Salary: $" + _gameManager.GetSalary();
         multiplierText.text = "Multiplier: " + _gameManager.GetMultiplier();
+
+        // Construct time
+        int minutes = Mathf.FloorToInt(_gameManager.GetTimeToNextCodeReview() / 60);
+        int seconds = Mathf.FloorToInt((_gameManager.GetTimeToNextCodeReview() - (minutes * 60)));
+        codeReviewTimerText.text = "Work Due In: " + minutes + ":" + seconds;
         botText.text = BotText();
         PlayerController playerController = _player.GetComponent<PlayerController>();
         _canInteract = playerController.GetColliding();

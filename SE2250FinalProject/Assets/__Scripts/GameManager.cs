@@ -87,6 +87,14 @@ public class GameManager : MonoBehaviour
 
     private bool _isEarning;
 
+    // Timer to track code reviews
+    private float _timeToNextCodeReview;
+
+    private bool _workComplete;
+
+    private const int _codeReviewPenalty = 20;
+
+    private const int _codeReviewReward = 10;
 
     // These are for alerts and presenting messages for plot
     private string _globalAlert;
@@ -168,6 +176,10 @@ public class GameManager : MonoBehaviour
 
             _timeToNextEarning = 2;
 
+            _timeToNextCodeReview = 180;
+
+            _workComplete = false;
+
             _alertDisplayed = false;
 
             _currentPlayer = GetNewCharacter(); // get the player
@@ -187,6 +199,8 @@ public class GameManager : MonoBehaviour
         {
             EarnMoney();
         }
+
+        CodeReview();
         // Check if you beat the level  or lost
         CheckForPromotion();
         CheckFired();
@@ -275,6 +289,11 @@ public class GameManager : MonoBehaviour
     public bool GetIsHans()
     {
         return _isHans;
+    }
+
+    public float GetTimeToNextCodeReview()
+    {
+        return _timeToNextCodeReview;
     }
 
     public float GetComputerTime()
@@ -413,6 +432,34 @@ public class GameManager : MonoBehaviour
             _timeToNextEarning = 2;
         }
     }
+
+    // This method decrements the code review timer and generates alerts when the player has code reviews
+    void CodeReview()
+    {
+        _timeToNextCodeReview -= Time.deltaTime;
+        if (_timeToNextCodeReview <= 0)
+        {
+            // Perform codeReview
+            if (_workComplete)
+            {
+                GlobalAlert("You completed your work on time! Good job!");
+                _influence += Mathf.RoundToInt(_multiplier * _codeReviewReward);
+            }
+            else if (_influence - _codeReviewReward > 0)
+            {
+                GlobalAlert("You didn't finish your work on time! Don't keep this up because you could get fired soon!");
+                _influence -= _codeReviewPenalty;
+            }
+            else
+            {
+                // No message to display here because the player has been fired
+                _influence -= _codeReviewPenalty;
+            }
+            _timeToNextCodeReview = 180;
+            _workComplete = false;
+        }
+    }
+
     // increments influence as accrued. Displays alert if you are close to losing.
     public void IncrementInfluence(int influenceChange)
     {
@@ -469,7 +516,9 @@ public class GameManager : MonoBehaviour
         IncrementMultiplierByFactor(1.3f);
         string name = _terminalOwner;
         GoToGameScene();
+        _workComplete = true;
         GlobalAlert("You successfully stole from " + name + "! You stole 10 Influence.");
+
     }
 
 
