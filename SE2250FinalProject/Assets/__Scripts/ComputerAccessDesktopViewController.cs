@@ -27,6 +27,12 @@ public class ComputerAccessDesktopViewController : ComputerViewController
     public Text GuessOneText;
     public Text GuessTwoText;
     public Text GuessThreeText;
+    public Text titleText;
+
+    public Button cancelButton;
+    public Button guessOneButton;
+    public Button guessTwoButton;
+    public Button guessThreeButton;
 
     // Set up text and initial guesses
     override protected void Awake()
@@ -39,13 +45,19 @@ public class ComputerAccessDesktopViewController : ComputerViewController
         _buttonOneGuess = Random.Range(_currentMin, _currentMax);
         _buttonTwoGuess = Random.Range(_currentMin, _currentMax);
         _buttonThreeGuess = Random.Range(_currentMin, _currentMax);
+
+        // If hans is stealing, the maximum number is significantly higher
+        if (_gameManager.GetIsHans())
+        {
+            // Difficulty is proportional to influence (ie. harder to guess the right number with more influence)
+            _currentMax = 10 * _gameManager.GetInfluence();
+        }
     }
 
     // Update the guesses.
     protected override void Update()
     {
         base.Update();
-
         GuessOneText.text = _buttonOneGuess.ToString();
         GuessTwoText.text = _buttonTwoGuess.ToString();
         GuessThreeText.text = _buttonThreeGuess.ToString();
@@ -91,6 +103,17 @@ public class ComputerAccessDesktopViewController : ComputerViewController
     public void ButtonThreeGuess()
     {
         UpdateGuesses(_buttonThreeGuess);
+    }
+
+    protected override void ResizeUIComponents()
+    {
+        base.ResizeUIComponents();
+        ResizeText(GuessText, _resolution);
+        ResizeText(titleText, _resolution);
+        ResizeButton(guessOneButton, _resolution);
+        ResizeButton(guessTwoButton, _resolution);
+        ResizeButton(guessThreeButton, _resolution);
+        ResizeButton(cancelButton, _resolution);
     }
 
 

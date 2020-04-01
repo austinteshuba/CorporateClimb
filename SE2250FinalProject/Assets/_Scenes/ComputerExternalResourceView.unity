@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1519,6 +1519,14 @@ MonoBehaviour:
   TimeText: {fileID: 1193820595}
   ResourcesText: {fileID: 1268401022}
   MessageText: {fileID: 1309441284}
+  titleText: {fileID: 930136862}
+  henryImage: {fileID: 2065371237}
+  jimImage: {fileID: 501008218}
+  piperImage: {fileID: 984175945}
+  cancelButton: {fileID: 1220624794}
+  henryButton: {fileID: 45356178}
+  jimButton: {fileID: 1505196799}
+  piperButton: {fileID: 789855419}
 --- !u!1001 &982358747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3366,6 +3374,8 @@ MonoBehaviour:
   KiraBlack: {fileID: 1165999807398598, guid: 6a17b3091e67940d7b8ccb737b5cbab2, type: 3}
   KiraYellow: {fileID: 1165999807398598, guid: 08eca4dbb1392402d9176b29116cf322, type: 3}
   KiraWhite: {fileID: 1165999807398598, guid: 1eb7595d4e7584416bb97246d4a4933f, type: 3}
+  DogPrefab: {fileID: 5571640137823453039, guid: f551b7b79c50148008a79669c8ea8f04,
+    type: 3}
   Bots: []
 --- !u!4 &2083976429
 Transform:

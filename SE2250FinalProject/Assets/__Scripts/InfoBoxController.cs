@@ -15,6 +15,10 @@ public class InfoBoxController : MonoBehaviour
     protected Text _messageText;
     private GameManager _gameManager;
 
+    private Vector2 _resolution;
+
+    private readonly Vector2 HARDCODED_RESOLUTION = new Vector2(1524f, 762f);
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -48,6 +52,11 @@ public class InfoBoxController : MonoBehaviour
         _gameManager = GameManager.Instance;
         // Hide everything
         HideBox();
+
+        _resolution = HARDCODED_RESOLUTION;
+
+        ResizeUIComponents();
+        _resolution = new Vector2(Screen.width, Screen.height);
     }
 
     // Show the box
@@ -74,6 +83,23 @@ public class InfoBoxController : MonoBehaviour
         _gameManager.DisableAlert();
     }
 
+    protected virtual void ResizeUIComponents()
+    {
+        ResizeGameObject(ButtonPrefab);
+    }
+
+    protected void ResizeGameObject(GameObject obj)
+    {
+        RectTransform oldTransform = obj.GetComponent<RectTransform>();
+
+        oldTransform.anchoredPosition = new Vector3(oldTransform.anchoredPosition.x / _resolution.x * Screen.width, oldTransform.anchoredPosition.y / _resolution.y * Screen.height, oldTransform.position.z);
+        oldTransform.localScale = new Vector3(Screen.width / HARDCODED_RESOLUTION.x, Screen.height / HARDCODED_RESOLUTION.y, 1f);
+
+        obj.GetComponent<RectTransform>().anchoredPosition = oldTransform.anchoredPosition;
+        obj.GetComponent<RectTransform>().localScale = oldTransform.localScale;
+    }
+
+
     // destroy box if needed
     public virtual void DestroyBox()
     {
@@ -85,5 +111,14 @@ public class InfoBoxController : MonoBehaviour
     public void SetText(string message)
     {
         _messageText.text = message;
+    }
+
+    protected virtual void Update()
+    {
+        if (Screen.width != _resolution.x || Screen.height != _resolution.y)
+        {
+            ResizeUIComponents();
+            _resolution = new Vector2(Screen.width, Screen.height);
+        }
     }
 }

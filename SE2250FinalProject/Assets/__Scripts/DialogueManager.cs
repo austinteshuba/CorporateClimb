@@ -29,6 +29,8 @@ public class DialogueManager : InfoBoxController
     private void Awake()
     {
         _gameManager = GameManager.Instance;
+
+
     }
 
     // Start is called before the first frame update
@@ -52,7 +54,7 @@ public class DialogueManager : InfoBoxController
     }
 
     // Displays the dialogue box and prompts user to select dialogue options.
-    public void InitializeDialogue(bool isHans, GameObject interactingBot)
+    public void InitializeDialogue(GameObject interactingBot)
     {
         // Set bot
         _bot = interactingBot;
@@ -63,7 +65,8 @@ public class DialogueManager : InfoBoxController
         // Get dialogue type from user
         SetText("What do you want to say to " + _bot.GetComponent<BotController>().GetCharacterName() + "?");
 
-        if (isHans)
+        // If at level 2, talking becomes available for both
+        if (_gameManager.GetIsHans() || _gameManager.GetLevel() == 2)
         {
             CreateButtonArray(_options, PresentDialogues);
             _dialogueType = null;
@@ -76,6 +79,18 @@ public class DialogueManager : InfoBoxController
 
 
 
+    }
+
+    protected override void ResizeUIComponents()
+    {
+        base.ResizeUIComponents();
+        if (_buttons != null)
+        {
+            foreach (GameObject button in _buttons)
+            {
+                ResizeGameObject(button);
+            }
+        }
     }
 
     // Presents user with dialogue options associated with the category selection
@@ -290,7 +305,16 @@ public class DialogueManager : InfoBoxController
     // Returns true/false depending on the propability of success
     bool isSuccessful(int probSuccess)
     {
-        int randInt = Mathf.RoundToInt(Random.Range(0, 100));
+        int randInt;
+        // If on level 2, prob of success for kira is inversely proportional to the player's influence
+        if (_gameManager.GetLevel() == 2 && !_gameManager.GetIsHans())
+        {
+            randInt = Mathf.RoundToInt(Random.Range(0, 100) / (_gameManager.GetInfluence()/10));
+        }
+        else
+        {
+            randInt = Mathf.RoundToInt(Random.Range(0, 100));
+        }
         return randInt <= probSuccess;
     }
 }

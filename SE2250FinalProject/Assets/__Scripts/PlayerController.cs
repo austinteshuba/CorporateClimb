@@ -23,9 +23,16 @@ public class PlayerController : MonoBehaviour
     private bool _sittingFlag;
     private bool _isColliding;
     private bool _isCollidingWithDesk;
+    private bool _isCollidingVideoGame;
+    private bool _isInOffice;
 
     // Holds bot being collided with
     private GameObject _collidingBot;
+
+    // Time interval for recording path for dog
+    private float _positionTimeInterval = 0.5f;
+
+
 
   
 
@@ -37,6 +44,11 @@ public class PlayerController : MonoBehaviour
         _socializingFlag = false;
         _sittingFlag = false;
         _isColliding = false;
+        _isCollidingWithDesk = false;
+        _isCollidingVideoGame = false;
+        _isInOffice = false;
+
+        UpdatePositionList();
     }
 
     // Update is called once per frame
@@ -58,7 +70,6 @@ public class PlayerController : MonoBehaviour
         if (_isColliding)
         {
             if (Input.GetKey(KeyCode.T)) { Socialize(_collidingBot); }
-            //if (Input.GetKey(KeyCode.S)) { TryStealing(); }
         }
 
         if (_isCollidingWithDesk && isSitting)
@@ -66,9 +77,36 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.C))
             {
                 isSitting = false;
-                GameManager.Instance.GoToComputerView();
+                _gameManager.GoToComputerView();
             }
         }
+
+        if (_isCollidingVideoGame)
+        {
+            if (Input.GetKey(KeyCode.P))
+            {
+                _gameManager.GoToVideoGame();
+            }
+        }
+
+        // If on level two, record positions
+
+        if (_gameManager.GetLevel() == 2 && translation > 0.0 && !_isInOffice)
+        {
+            _positionTimeInterval -= Time.deltaTime;
+            if (_positionTimeInterval <= 0.0f)
+            {
+                UpdatePositionList();
+                
+                _positionTimeInterval = 0.5f; 
+            }
+        }
+
+    }
+
+    private void UpdatePositionList()
+    {
+        _gameManager.PlayerPositions.Enqueue(transform.position);
     }
 
     public bool GetColliding()
@@ -79,6 +117,11 @@ public class PlayerController : MonoBehaviour
     public bool GetCollidingWithDesk()
     {
         return _isCollidingWithDesk;
+    }
+
+    public bool GetCollidingVideoGame()
+    {
+        return _isCollidingVideoGame;
     }
 
 
@@ -115,6 +158,12 @@ public class PlayerController : MonoBehaviour
         } else if (other.CompareTag("Desk"))
         {
             _isCollidingWithDesk = true;
+        } else if (other.CompareTag("Arcade"))
+        {
+            _isCollidingVideoGame = true;
+        } else if (other.CompareTag("Offices"))
+        {
+            _isInOffice = true;
         }
     }
 
@@ -126,6 +175,9 @@ public class PlayerController : MonoBehaviour
         } else if (other.CompareTag("Desk"))
         {
             _isCollidingWithDesk = false;
+        } else if (other.CompareTag("Offices"))
+        {
+            _isInOffice = false;
         }
     }
 
@@ -140,7 +192,7 @@ public class PlayerController : MonoBehaviour
             } else
             {
                 DialogueManager dm = FindObjectOfType<DialogueManager>();
-                dm.InitializeDialogue(_gameManager.GetIsHans(), collidingBot);
+                dm.InitializeDialogue(collidingBot);
             }
    
             _socializingFlag = true;

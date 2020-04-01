@@ -36,7 +36,18 @@ public class GameManager : MonoBehaviour
 
     public GameObject KiraWhite;
 
+    public GameObject DogPrefab;
+
+    public int IncompleteWorkPenalty = 10;
+
+    private GameObject _dog;
+
+    private GameObject _playerObject;
+
     public List<GameObject> Bots; // repository of all active bots.
+
+    // Queue of recent positions for dog tracking
+    public Queue<Vector3> PlayerPositions;
 
 
     // Used for sending alerts
@@ -57,10 +68,18 @@ public class GameManager : MonoBehaviour
         set { _isHans = value == "Hans"; }
     }
 
+    private int _messageCount
+    {
+        get
+        {
+            return _globalAlertQueue.Count;
+        }
+    }
+
     private GameObject _currentPlayer;
 
     // Scene names for navigation
-    private string[] _sceneNames = new string[]{ "CharacterCustomization", "LevelOne", "ComputerView", "ComputerExternalResourceView", "ComputerDesktopView" };
+    private string[] _sceneNames = new string[]{ "CharacterCustomization", "LevelOne", "ComputerView", "ComputerExternalResourceView", "ComputerDesktopView", "LevelTwo", "VideoGame" };
 
     private string _currentSceneName;
 
@@ -85,13 +104,37 @@ public class GameManager : MonoBehaviour
 
     private string _jobPosition;
 
+    private int _level
+    {
+        get
+        {
+            return _jobPosition == "Intern" ? 1 : 2;
+        }
+
+        set
+        {
+            if (value == 1)
+            {
+                _jobPosition = "Intern";
+            } else if (value == 2)
+            {
+                _jobPosition = "Manager";
+            }
+        }
+    }
+
     private bool _isEarning;
+
+    // Code review variables
+    private bool _codeReviewActive;
+
+    private float _timeToNextCodeReview;
 
 
     // These are for alerts and presenting messages for plot
     private string _globalAlert;
 
-    private bool _alertDisplayed;
+    public bool alertDisplayed;
 
     private Queue<string> _globalAlertQueue;
 
@@ -155,6 +198,7 @@ public class GameManager : MonoBehaviour
             _gameAlertsPresented = false;
 
             // Set default values for the player
+            // Start at level 1 (i.e. intern)
             _influence = 0;
             _multiplier = 1.0f;
             _cash = 1000f;
@@ -168,9 +212,15 @@ public class GameManager : MonoBehaviour
 
             _timeToNextEarning = 2;
 
-            _alertDisplayed = false;
+            alertDisplayed = false;
 
             _currentPlayer = GetNewCharacter(); // get the player
+
+            // Code Review
+            _timeToNextCodeReview = 180;
+            _codeReviewActive = true;
+
+            PlayerPositions = new Queue<Vector3>();
 
         } else {
             Destroy(gameObject);
@@ -190,18 +240,25 @@ public class GameManager : MonoBehaviour
         // Check if you beat the level  or lost
         CheckForPromotion();
         CheckFired();
+        CheckBots();
+
+        // Run code review timer
+        if (_codeReviewActive)
+        {
+            CodeReview();
+        }
 
         // present alerts if needed.
-        if (_globalAlertQueue.Count > 0)
+        if (_messageCount > 0)
         {
-            if (!_alertDisplayed)
+            if (!alertDisplayed)
             {
                 _infoBox = FindObjectOfType<InfoBoxController>();
                 _infoBox.SetText("                         ALERT\n\n\n" + _globalAlertQueue.Dequeue());
                 _infoBox.ShowBox();
-                _alertDisplayed = true;
+                alertDisplayed = true;
             }   
-        } else if (_globalAlertQueue.Count == 0 && _influence < -15) // Handles the case of being fired.
+        } else if (_messageCount == 0 && _influence < -15) // Handles the case of being fired.
         {
             ResetGame();
         }
@@ -277,10 +334,36 @@ public class GameManager : MonoBehaviour
         return _isHans;
     }
 
+    public float GetTimeToNextCodeReview()
+    {
+        return _timeToNextCodeReview;
+    }
+
     public float GetComputerTime()
     {
         return _computerTimeLeft;
     }
+
+    public bool GetCodeReviewActive()
+    {
+        return _codeReviewActive;
+    }
+
+    public int GetLevel()
+    {
+        return _level;
+    }
+
+    public GameObject GetPlayerObject()
+    {
+        return _playerObject;
+    }
+
+    public void SetPlayerObject(GameObject player)
+    {
+        _playerObject = player;
+    }
+
     // Gets the text for each character description
     public string GetCharacterText()
     {
@@ -372,6 +455,7 @@ public class GameManager : MonoBehaviour
 
     
     // Checks to see if the player lost.
+    
     void CheckFired()
     {
         if (_influence < -15)
@@ -383,12 +467,38 @@ public class GameManager : MonoBehaviour
     // checks to see if player won
     void CheckForPromotion()
     {
-        if (_influence >= 100)
+        if (_influence >= 100 && _level == 1)
         {
             _influence -= 100;
-            _salary = Mathf.RoundToInt(_salary * 1.1f);
-            _jobPosition = "Analyst";
-            GlobalAlert("You got a Promotion to Analyst! [Next Level]");
+            _salary = Mathf.RoundToInt(_salary * 1.5f);
+            _level = 2;
+            GoToGameScene();
+            GlobalAlert("You got a Promotion to Manager!");
+            GlobalAlert("With more power comes more responsibility");
+
+            // Explain new abilities!
+            if (_isHans)
+            {
+                GlobalAlert("Since you have more senority, the IT department has given you more computer privelages. If you enter a computer, you can now access the employee's desktop and attempt to steal their work!");
+            }
+            else
+            {
+                GlobalAlert("You've been improving your interpersonal skills! Now you can insult other employees or offer to buy them stuff in the dialogue panel!");
+            }
+        }
+        // TODO: Add functionality to "Win"
+    }
+
+    // Checks to see if any bots have reach 100 influence. If any one of them does, you lose the game.
+    void CheckBots()
+    {
+        foreach (string bot in _bots.Keys)
+        {
+            if (_bots[bot] >= 100)
+            {
+                GlobalAlert("Oh no! Looks like " + bot + " got promoted instead of you. Next time make sure none of your colleagues get too much influence!");
+                Invoke("ResetGame", 4);
+            }
         }
     }
 
@@ -422,7 +532,12 @@ public class GameManager : MonoBehaviour
         }
         _influence += Mathf.RoundToInt(influenceChange * _multiplier);
 
+    }
 
+    // Activates/deactivates code reviewing feature
+    public void SetCodeReivew(bool status)
+    {
+        _codeReviewActive = status;
     }
 
     // Incremements multiplier by constant
@@ -458,7 +573,7 @@ public class GameManager : MonoBehaviour
     // disables alert as needed.
     public void DisableAlert()
     {
-        _alertDisplayed = false;
+        alertDisplayed = false;
     }
 
     // Successfully steals from bot.
@@ -532,9 +647,22 @@ public class GameManager : MonoBehaviour
 
     public void GoToGameScene()
     {
-        _currentSceneName = _sceneNames[1];
+        if (_level == 1)
+        {
+            _currentSceneName = _sceneNames[1];
+        } else
+        {
+            _currentSceneName = _sceneNames[5];
+        }
         _isEarning = true;
         _terminalOwner = null;
+        UpdateScene();
+    }
+
+    public void GoToVideoGame()
+    {
+        _currentSceneName = _sceneNames[6];
+        _isEarning = false;
         UpdateScene();
     }
 
@@ -578,115 +706,22 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(_currentSceneName);
     }
 
-    // Hire the appropriate contractor/
-
-    public void HireHenry()
+    // Run code review
+    private void CodeReview()
     {
-        GoToGameScene();
-        if (_cash >= 200)
+        if (_codeReviewActive)
         {
-            // deduct fees and create an outcome.
-            IncrementCash(-200);
-
-            float chances = Random.Range(0.0f, 1.0f);
-
-            if (chances < .15)
+            _timeToNextCodeReview -= Time.deltaTime;
+            if (_timeToNextCodeReview <= 0.0)
             {
-                IncrementInfluence(20);
-                IncrementMultiplierByFactor(1.3f);
-                GlobalAlert("Wow, impressive! Henry's work really paid off for you.");
+                GlobalAlert("Your boss is starting to wonder whether you're actually doing work. Hurry up and get a promotion before they find out!");
+                IncrementInfluence(-1 * IncompleteWorkPenalty);
+                _timeToNextCodeReview = 180;
             }
-            else if (chances < .85)
-            {
-                IncrementInfluence(10);
-                IncrementMultiplierByFactor(1.2f);
-                GlobalAlert("Henry performed as expected. Nice!");
-            }
-            else
-            {
-                IncrementInfluence(3);
-                IncrementMultiplierByFactor(1.05f);
-                GlobalAlert("Henry didn't do so well for you, but still better than nothing.");
-            }
-
-        } else // if you can't afford him, you lose some influence for even trying. 
-        {
-            GlobalAlert("You didn't have enough cash to hire Henry. He told you to buzz off until you have enough money.");
-            IncrementInfluence(-1);
         }
     }
 
 
-    public void HireJim()
-    {
-        GoToGameScene();
-        // deduct fees and create an outcome.
-        if (_cash >= 250)
-        {
-            IncrementCash(-250);
-
-            float chances = Random.Range(0.0f, 1.0f);
-
-            if (chances < .35)
-            {
-                IncrementInfluence(25);
-                IncrementMultiplierByFactor(1.4f);
-                GlobalAlert("Jim was a rockstar on this one. It wasn't rocket science, but Jim still crushed it!");
-            }
-            else if (chances < .65)
-            {
-                IncrementInfluence(12);
-                IncrementMultiplierByFactor(1.2f);
-                GlobalAlert("Jim performed as expected - pretty nice!");
-            }
-            else
-            {
-                IncrementInfluence(-5);
-                IncrementMultiplierByFactor(.9f);
-                GlobalAlert("Jim didn't do so well for you. His work was a little bit 'much'");
-            }
-
-        }
-        else // if you can't afford him, you lose some influence for even trying. 
-        {
-            GlobalAlert("You didn't have enough cash to hire Jim. He told you to fly into the sun until you have enough money.");
-            IncrementInfluence(-1);
-        }
-    }
-
-    public void HirePiper()
-    {
-        GoToGameScene();// deduct fees and create an outcome.
-        if (_cash >= 300)
-        {
-            IncrementCash(-300);
-
-            float chances = Random.Range(0.0f, 1.0f);
-
-            if (chances < .45)
-            {
-                IncrementInfluence(40);
-                IncrementMultiplierByFactor(1.6f);
-                GlobalAlert("Piper killed it! Love that wiz kid.");
-            }
-            else if (chances < .55)
-            {
-                IncrementInfluence(15);
-                IncrementMultiplierByFactor(1.2f);
-                GlobalAlert("Pretty rare, but Piper was pretty run of the mill. Not bad.");
-            }
-            else
-            {
-                IncrementInfluence(-15);
-                IncrementMultiplierByFactor(.8f);
-                GlobalAlert("The work really wasn't good. Maybe Piper isn't that smart after all.");
-            }
-        } else
-        {
-            GlobalAlert("You didn't have enough cash to hire Piper. He cried because you tempted him with candy money, then ripped it away.");// if you can't afford him, you lose some influence for even trying. 
-            IncrementInfluence(-1);
-        }
-    }
 
     
 

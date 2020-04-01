@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
 
     private GameObject _playerObject; // Player Game Object
     private GameObject _player; // field for instance
+    private GameObject _dog;
     private GameManager _gameManager; // Game Manager field
     public GameObject BotObject; // Bot Object Field
     // fields for movement
@@ -19,6 +20,7 @@ public class CameraController : MonoBehaviour
 
     private bool _canInteract;
     private bool _canEnterComputer;
+    private bool _canPlayVideoGame;
 
     // Text variables
     public Text cashText;
@@ -27,6 +29,7 @@ public class CameraController : MonoBehaviour
     public Text salaryText;
     public Text multiplierText;
     public Text botText;
+    public Text codeReviewTimerText;
 
     // Fields for camera
     public float distance = 10.0f;
@@ -39,6 +42,7 @@ public class CameraController : MonoBehaviour
     // Text for the Text variables.
     private string _talkingInstructions = "Press 'T' to Talk";
     private string _computerInstructions = "Press 'C' to enter computer";
+    private string _videoGameInstructions = "Press 'P' to play video game with manager";
 
     // Shader to fix shadow glitch in Unity.
     private Shader _standardShader;
@@ -61,12 +65,14 @@ public class CameraController : MonoBehaviour
         // Init flags to false
         _canInteract = false;
         _canEnterComputer = false;
+        _canPlayVideoGame = false;
 
         // Instantiate player
         _gameManager = GameManager.Instance;
         _playerObject = _gameManager.GetCurrentPlayer();
 
         _player = Instantiate(_playerObject);
+        _gameManager.SetPlayerObject(_player);
         ChangeShader();
         _playerTransform = _player.GetComponent<Transform>();
         _playerTransform.position = new Vector3(.02f, 0f, -1.135623f);
@@ -95,6 +101,15 @@ public class CameraController : MonoBehaviour
 
         // Introduce game with some alerts
         _gameManager.GameIntroductionAlerts();
+
+        // Add dog if at level two
+        if (_gameManager.GetLevel() == 2)
+        {
+            Vector3 xyz = new Vector3(0, 90, 0);
+            Quaternion newRotation = Quaternion.Euler(xyz);
+            Vector3 playerTransform = _gameManager.GetCurrentPlayer().transform.position;
+            _dog = Instantiate(_gameManager.DogPrefab, new Vector3(playerTransform.x, 1, playerTransform.z - 2), newRotation);
+        }
         
 
 
@@ -108,11 +123,28 @@ public class CameraController : MonoBehaviour
         // alertText.text = _gameManager.GetGlobalAlert();
         salaryText.text = "Current Salary: $" + _gameManager.GetSalary();
         multiplierText.text = "Multiplier: " + _gameManager.GetMultiplier();
+
+        
+
+        // Get time remaining for code reveiw
+        if (_gameManager.GetCodeReviewActive())
+        {
+            // Construct time
+            int minutes = Mathf.FloorToInt(_gameManager.GetTimeToNextCodeReview() / 60);
+            int seconds = Mathf.FloorToInt(_gameManager.GetTimeToNextCodeReview() - (minutes * 60));
+            codeReviewTimerText.text = "Work Due In: " + minutes + ":" + seconds;
+        } else
+        {
+            codeReviewTimerText.text = "";
+        }
+        
         botText.text = BotText();
         PlayerController playerController = _player.GetComponent<PlayerController>();
         _canInteract = playerController.GetColliding();
 
         _canEnterComputer = playerController.isSitting && playerController.GetCollidingWithDesk(); // to enter computer, must be squasting
+
+        _canPlayVideoGame = playerController.GetCollidingVideoGame();
         UpdateInstructionsText();
     }
 
@@ -126,6 +158,9 @@ public class CameraController : MonoBehaviour
         else if (_canEnterComputer)
         {
             instructionsText.text = _computerInstructions;
+        } else if (_canPlayVideoGame)
+        {
+            instructionsText.text = _videoGameInstructions;
         }
         else
         {
