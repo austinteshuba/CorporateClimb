@@ -26,6 +26,10 @@ public class DesktopViewController : ComputerViewController
 
     public Button StealButton;
 
+    public Button helpButton;
+
+    public Button cancelButton;
+
     // Updates text and checks permissions.
     // Hans cannot steal as he has more speaking abilities (as required)
     protected override void Awake()
@@ -35,7 +39,8 @@ public class DesktopViewController : ComputerViewController
 
         TitleText.text = _gameManager.GetTerminalOwnerName() + "'s Terminal";
 
-        if (_gameManager.GetIsHans())
+        // If at level 2, steal button becomes active for hans too
+        if (_gameManager.GetIsHans() && _gameManager.GetLevel() == 1)
         {
             StealButton.gameObject.SetActive(false);
         }
@@ -57,9 +62,20 @@ public class DesktopViewController : ComputerViewController
     {
         DescriptionText.text = _descriptionTexts[0];
     }
- 
 
-    
+    protected override void ResizeUIComponents()
+    {
+        base.ResizeUIComponents();
+        ResizeText(DescriptionText, _resolution);
+        ResizeText(TitleText, _resolution);
+        ResizeButton(StealButton, _resolution );
+        ResizeButton(helpButton, _resolution);
+        ResizeButton(cancelButton, _resolution);
+
+    }
+
+
+
     // Go to Appropriate Scenes.
     public void ToDesktop()
     {
